@@ -291,31 +291,10 @@ where
     Tx: Eq + Serialize + for<'r> Deserialize<'r> + Debug + Hash,
     NodeUid: Eq + Ord + Clone + Debug + Serialize + for<'r> Deserialize<'r> + Hash,
 {
-<<<<<<< HEAD
     /// Returns a new `DynamicHoneyBadgerBuilder` configured to use the node IDs and cryptographic
     /// keys specified by `netinfo`.
     pub fn builder(netinfo: NetworkInfo<NodeUid>) -> DynamicHoneyBadgerBuilder<Tx, NodeUid> {
         DynamicHoneyBadgerBuilder::new(netinfo)
-=======
-    /// Returns a new instance with the given parameters, starting at epoch `0`.
-    pub fn new(netinfo: NetworkInfo<NodeUid>, batch_size: usize) -> Result<Self> {
-        let honey_badger = HoneyBadgerBuilder::new(Rc::new(netinfo.clone()))
-            .batch_size(batch_size)
-            .max_future_epochs(0)
-            .build::<Transaction<Tx, NodeUid>>()?;
-        let dyn_hb = DynamicHoneyBadger {
-            netinfo,
-            batch_size,
-            start_epoch: 0,
-            votes: BTreeMap::new(),
-            honey_badger,
-            key_gen: None,
-            incoming_queue: Vec::new(),
-            messages: MessageQueue(VecDeque::new()),
-            output: VecDeque::new(),
-        };
-        Ok(dyn_hb)
->>>>>>> Add Honey Badger builder.
     }
 
     /// Handles a message for the `HoneyBadger` instance.
