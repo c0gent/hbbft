@@ -57,8 +57,13 @@ use clear_on_drop::ClearOnDrop;
 use serde::{Deserialize, Serialize};
 
 use crypto::{PublicKey, PublicKeySet, SecretKey, Signature};
+<<<<<<< HEAD
 use honey_badger::{self, Batch as HbBatch, HoneyBadger, Message as HbMessage};
 use messaging::{DistAlgorithm, NetworkInfo, Target, TargetedMessage};
+=======
+use honey_badger::{self, HoneyBadger, HoneyBadgerBuilder};
+use messaging::{DistAlgorithm, NetworkInfo, TargetedMessage};
+>>>>>>> Add Honey Badger builder.
 use sync_key_gen::{Accept, Propose, SyncKeyGen};
 
 type KeyGenOutput = (PublicKeySet, Option<ClearOnDrop<Box<SecretKey>>>);
@@ -286,10 +291,31 @@ where
     Tx: Eq + Serialize + for<'r> Deserialize<'r> + Debug + Hash,
     NodeUid: Eq + Ord + Clone + Debug + Serialize + for<'r> Deserialize<'r> + Hash,
 {
+<<<<<<< HEAD
     /// Returns a new `DynamicHoneyBadgerBuilder` configured to use the node IDs and cryptographic
     /// keys specified by `netinfo`.
     pub fn builder(netinfo: NetworkInfo<NodeUid>) -> DynamicHoneyBadgerBuilder<Tx, NodeUid> {
         DynamicHoneyBadgerBuilder::new(netinfo)
+=======
+    /// Returns a new instance with the given parameters, starting at epoch `0`.
+    pub fn new(netinfo: NetworkInfo<NodeUid>, batch_size: usize) -> Result<Self> {
+        let honey_badger = HoneyBadgerBuilder::new(Rc::new(netinfo.clone()))
+            .batch_size(batch_size)
+            .max_future_epochs(0)
+            .build::<Transaction<Tx, NodeUid>>()?;
+        let dyn_hb = DynamicHoneyBadger {
+            netinfo,
+            batch_size,
+            start_epoch: 0,
+            votes: BTreeMap::new(),
+            honey_badger,
+            key_gen: None,
+            incoming_queue: Vec::new(),
+            messages: MessageQueue(VecDeque::new()),
+            output: VecDeque::new(),
+        };
+        Ok(dyn_hb)
+>>>>>>> Add Honey Badger builder.
     }
 
     /// Handles a message for the `HoneyBadger` instance.
@@ -409,7 +435,10 @@ where
 =======
         self.netinfo = netinfo.clone();
         let buffer = self.honey_badger.drain_buffer();
-        self.honey_badger = HoneyBadger::new(Rc::new(netinfo), self.batch_size, 0, buffer)?;
+        self.honey_badger = HoneyBadgerBuilder::new(Rc::new(netinfo))
+            .batch_size(self.batch_size)
+            .max_future_epochs(0)
+            .build_with_transactions(buffer)?;
         Ok(())
 >>>>>>> Add a max_future_epochs option to Honey Badger.
     }

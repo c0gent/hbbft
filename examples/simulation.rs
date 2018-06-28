@@ -25,7 +25,7 @@ use serde::Serialize;
 use signifix::{metric, TryFrom};
 
 use hbbft::crypto::SecretKeySet;
-use hbbft::honey_badger::{Batch, HoneyBadger};
+use hbbft::honey_badger::{Batch, HoneyBadger, HoneyBadgerBuilder};
 use hbbft::messaging::{DistAlgorithm, NetworkInfo, Target};
 
 const VERSION: &str = env!("CARGO_PKG_VERSION");

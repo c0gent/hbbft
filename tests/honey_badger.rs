@@ -18,7 +18,7 @@ use std::rc::Rc;
 
 use rand::Rng;
 
-use hbbft::honey_badger::{self, Batch, HoneyBadger, MessageContent};
+use hbbft::honey_badger::{self, Batch, HoneyBadger, HoneyBadgerBuilder, MessageContent};
 use hbbft::messaging::{NetworkInfo, Target, TargetedMessage};
 
 use network::{
