@@ -403,8 +403,15 @@ where
             info!("No-op change: {:?}", change);
         }
         let netinfo = NetworkInfo::new(self.our_id().clone(), all_uids, sk, pub_key_set);
+<<<<<<< HEAD
         self.netinfo = netinfo;
         self.restart_honey_badger(epoch)
+=======
+        self.netinfo = netinfo.clone();
+        let buffer = self.honey_badger.drain_buffer();
+        self.honey_badger = HoneyBadger::new(Rc::new(netinfo), self.batch_size, 0, buffer)?;
+        Ok(())
+>>>>>>> Add a max_future_epochs option to Honey Badger.
     }
 
     /// If the majority of votes has changed, restarts Key Generation for the set of nodes implied
