@@ -112,7 +112,7 @@ extern crate itertools;
 extern crate merkle;
 extern crate pairing;
 #[cfg(feature = "serialization-protobuf")]
-extern crate protobuf;
+pub extern crate protobuf;
 extern crate rand;
 extern crate reed_solomon_erasure;
 extern crate ring;
