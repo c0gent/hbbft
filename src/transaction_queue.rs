@@ -31,4 +31,9 @@ impl<Tx: Clone> TransactionQueue<Tx> {
         };
         sample.into_iter().cloned().collect()
     }
+
+    /// Returns the current size of the queue.
+    pub fn len(&self) -> usize {
+        self.0.len()
+    }
 }

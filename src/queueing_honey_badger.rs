@@ -189,10 +189,22 @@ where
     }
 
     /// Initiates the next epoch by proposing a batch from the queue.
-    fn propose(&mut self) -> Result<FaultLog<NodeUid>> {
+    pub fn propose(&mut self) -> Result<FaultLog<NodeUid>> {
         let amount = self.batch_size / self.dyn_hb.netinfo().num_nodes();
         let proposal = self.queue.choose(amount, self.batch_size);
         Ok(self.dyn_hb.input(Input::User(proposal))?)
+    }
+
+    /// Returns a reference to the internal transaction queue.
+    ///
+    /// Useful for determining the current size of the queue.
+    pub fn queue(&self) -> &TransactionQueue<Tx> {
+        &self.queue
+    }
+
+    /// Returns a reference to the internal honey badger instance.
+    pub fn dyn_hb(&self) -> &DynamicHoneyBadger<Vec<Tx>, NodeUid> {
+        &self.dyn_hb
     }
 }
 
