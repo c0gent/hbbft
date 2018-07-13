@@ -246,7 +246,7 @@ impl Poly {
 pub struct Commitment {
     /// The coefficients of the polynomial.
     #[serde(with = "super::serde_impl::projective_vec")]
-    pub(super) coeff: Vec<G1>,
+    pub coeff: Vec<G1>,
 }
 
 impl Hash for Commitment {

@@ -30,7 +30,7 @@ const ERR_OS_RNG: &str = "could not initialize the OS random number generator";
 
 /// A public key, or a public key share.
 #[derive(Deserialize, Serialize, Clone, PartialEq, Eq)]
-pub struct PublicKey(#[serde(with = "serde_impl::projective")] G1);
+pub struct PublicKey(#[serde(with = "serde_impl::projective")] pub G1);
 
 impl Hash for PublicKey {
     fn hash<H: Hasher>(&self, state: &mut H) {
