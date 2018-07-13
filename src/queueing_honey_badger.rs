@@ -202,6 +202,11 @@ where
         }
         Ok(fault_log)
     }
+
+    /// Returns a reference to the internal `DynamicHoneyBadger` instance.
+    pub fn dyn_hb(&self) -> &DynamicHoneyBadger<Vec<Tx>, NodeUid> {
+        &self.dyn_hb
+    }
 }
 
 pub type Batch<Tx, NodeUid> = DhbBatch<Vec<Tx>, NodeUid>;
